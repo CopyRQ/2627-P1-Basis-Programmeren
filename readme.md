@@ -21,8 +21,8 @@ Stappen:
 
 Je moet dit project __forken__ en een duidelijke naam geven aan het project. Een goede naam is bijvoorbeeld:
 
-- p1-[voornaam]-[achternaam]
-- p1-[student-nummer]
+- p1-[Michael]-[van Eijnsbergen]
+- p1-[260649]
 
 Zo blijft het overzichtelijk en herkenbaar voor de docent.
 
