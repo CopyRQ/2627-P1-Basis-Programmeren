@@ -17,7 +17,9 @@ function draw() {
   drawCheckerboard(25, 220, 150, 8); 
   drawHouse(25, 450, 120, 150);
   drawStoplight();
-  drawDice()
+  drawDice(250, 350, 100, 3)
+  drawMario(400, 80, 8)
+  drawCharacter(400, 250, 8)
 }
 
 function drawFlag() {
@@ -101,13 +103,135 @@ function drawStoplight() {
   circle(300, 260, 60);
 }
 
-function drawDice () {
+function drawDice(x, y, boardSize, value) {
   fill(255);
-  rect(250, 350, 100);
-  fill(0);
-  circle(275, 375, 20);
-  circle(300, 400, 20);
-  circle(325, 375, 20);
-  circle(325, 425, 20);
-  circle(275, 425, 20);
+  stroke(0);
+  rect(x, y, boardSize, boardSize, boardSize * 0.1); 
+
+  let size = 3; 
+  let tileSize = boardSize / size;
+
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      
+      let tileX = x + col * tileSize + tileSize / 2;
+      let tileY = y + row * tileSize + tileSize / 2;
+      
+      let shouldDrawDot = false;
+
+      if (row === 1 && col === 1) {
+        if (value === 1 || value === 3 || value === 5) shouldDrawDot = true;
+      }
+
+      if ((row === 0 && col === 0) || (row === 2 && col === 2)) {
+        if (value >= 2 && value <= 6) shouldDrawDot = true;
+      }
+     
+      if ((row === 0 && col === 2) || (row === 2 && col === 0)) {
+        if (value >= 4 && value <= 6) shouldDrawDot = true;
+      }
+
+      if (row === 1 && (col === 0 || col === 2)) {
+        if (value === 6) shouldDrawDot = true;
+      }
+
+      if (shouldDrawDot) {
+        fill(0);
+        noStroke();
+        circle(tileX, tileY, tileSize * 0.5); 
+      }
+    }
+  }
+}
+
+function drawMario(x, y, pixelSize) {
+  noStroke();
+  
+  let marioGrid = [
+    [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 0, 0, 2, 2, 2, 3, 3, 2, 3, 0, 0, 0, 0, 0],
+    [0, 0, 0, 2, 3, 2, 3, 3, 3, 2, 3, 3, 3, 0, 0, 0],
+    [0, 0, 0, 2, 3, 2, 2, 3, 3, 3, 2, 3, 3, 3, 0, 0],
+    [0, 0, 0, 2, 2, 3, 3, 3, 3, 2, 2, 2, 2, 0, 0, 0],
+    [0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0],
+    [0, 0, 0, 0, 2, 2, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 2, 2, 2, 1, 2, 2, 1, 2, 2, 2, 0, 0, 0],
+    [0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0],
+    [0, 0, 3, 3, 2, 1, 3, 1, 1, 3, 1, 2, 3, 3, 0, 0],
+    [0, 0, 3, 3, 3, 1, 1, 1, 1, 1, 1, 3, 3, 3, 0, 0],
+    [0, 0, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 0, 0],
+    [0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0],
+    [0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0] 
+  ];
+
+  for (let row = 0; row < marioGrid.length; row++) {
+
+    for (let col = 0; col < marioGrid[row].length; col++) {
+      
+      let colorType = marioGrid[row][col];
+
+      if (colorType === 1) {
+        fill("#d80000");
+      } else if (colorType === 2) {
+        fill("#6A6B04");
+      } else if (colorType === 3) {
+        fill("#E39D25");
+      } else {
+        continue;       
+      }
+
+      let pixelX = x + col * pixelSize;
+      let pixelY = y + row * pixelSize;
+
+      square(pixelX, pixelY, pixelSize);
+    }
+  }
+}
+
+function drawCharacter(x, y, pixelSize) {
+  noStroke();
+  
+  let marioGrid = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  ];
+
+  for (let row = 0; row < marioGrid.length; row++) {
+
+    for (let col = 0; col < marioGrid[row].length; col++) {
+      
+      let colorType = marioGrid[row][col];
+
+      if (colorType === 1) {
+        fill("#d80000");
+      } else if (colorType === 2) {
+        fill("#6A6B04");
+      } else if (colorType === 3) {
+        fill("#E39D25");
+      } else {
+        continue;       
+      }
+
+      let pixelX = x + col * pixelSize;
+      let pixelY = y + row * pixelSize;
+
+      square(pixelX, pixelY, pixelSize);
+    }
+  }
 }
