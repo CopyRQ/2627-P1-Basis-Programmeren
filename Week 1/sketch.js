@@ -41,6 +41,7 @@ function draw() {
   drawDice(250, 350, 100, 5);
   drawMario(400, 80, 10);
   drawCharacter(400, 300, 10);
+  drawSierpinskiTriangle(760, 180, 350, 15000);
 
   draw3DCatLayer();
   image(graphics3D, 70, 0);
@@ -49,7 +50,7 @@ function draw() {
 function draw3DCatLayer() {
   graphics3D.clear();
 
-  orbitAngle += -0.04;
+  orbitAngle += 0.04;
 
   let orbitRadius = 0;
   let catX = cos(orbitAngle) * orbitRadius;
@@ -242,7 +243,7 @@ function drawMario(x, y, pixelSize) {
 function drawCharacter(x, y, pixelSize) {
   noStroke();
   
-  let marioGrid = [
+  let characterGrid = [
     [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 1, 3, 2, 2, 2, 3, 1, 0, 0, 0, 0],
     [0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 3, 1, 0, 0, 0],
@@ -262,11 +263,11 @@ function drawCharacter(x, y, pixelSize) {
     [0, 0, 0, 1, 8, 4, 1, 0, 1, 8, 4, 1, 0, 0, 0, 0] 
   ];
 
-  for (let row = 0; row < marioGrid.length; row++) {
+  for (let row = 0; row < characterGrid.length; row++) {
 
-    for (let col = 0; col < marioGrid[row].length; col++) {
+    for (let col = 0; col < characterGrid[row].length; col++) {
       
-      let colorType = marioGrid[row][col];
+      let colorType = characterGrid[row][col];
 
       if (colorType === 1) {
         fill("#000000");
@@ -295,5 +296,25 @@ function drawCharacter(x, y, pixelSize) {
 
       square(pixelX, pixelY, pixelSize);
     }
+  }
+}
+
+function drawSierpinskiTriangle(x, y, size, amount) {
+  let vertices = [
+    createVector(x + size / 2, y),
+    createVector(x, y + size * 0.866),
+    createVector(x + size, y + size * 0.866)
+  ];
+
+  let currentPoint = createVector(random(x, x + size), random(y, y + size));
+
+  stroke(0);
+  strokeWeight(1);
+
+  for (let i = 0; i < amount; i++) {
+    let vertex = random(vertices);
+    currentPoint.x = lerp(currentPoint.x, vertex.x, 0.5);
+    currentPoint.y = lerp(currentPoint.y, vertex.y, 0.5);
+    point(currentPoint.x, currentPoint.y);
   }
 }
