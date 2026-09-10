@@ -12,6 +12,8 @@ function draw() {
   textSize(32);
   textStyle(BOLD);
   text("Michael van Eijnsbergen", 25, 50);
+  text("Mario", 440, 70)
+  text("Celeste", 425, 280)
     
   drawFlag();
   drawCheckerboard(25, 220, 150, 8); 
@@ -19,7 +21,7 @@ function draw() {
   drawStoplight();
   drawDice(250, 350, 100, 3)
   drawMario(400, 80, 10)
-  drawCharacter(400, 250, 10)
+  drawCharacter(400, 300, 10)
 }
 
 function drawFlag() {
