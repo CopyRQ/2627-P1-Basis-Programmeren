@@ -1,10 +1,29 @@
+let catModel;
+let whiskersModel;
+
+let catTexture;
+let whiskersTexture;
+
+let catScale = 1;
+let targetScale = 1;
+let orbitAngle = 0;
+let graphics3D;
+
+
+function preload() {
+  catModel = loadModel('cat_dingus.obj', true);
+
+  catTexture = loadImage('dingus.png');
+}
+
 function setup() {
   createCanvas(1200, 800);
+  graphics3D = createGraphics(1200, 800, WEBGL);
 }
 
 function draw() {
   background(220);
-  
+
   fill(255);
   stroke(0);
   strokeWeight(3);
@@ -12,16 +31,45 @@ function draw() {
   textSize(32);
   textStyle(BOLD);
   text("Michael van Eijnsbergen", 25, 50);
-  text("Mario", 440, 70)
-  text("Celeste", 425, 280)
+  text("Mario", 440, 70);
+  text("Celeste", 425, 280);
     
   drawFlag();
   drawCheckerboard(25, 220, 150, 8); 
   drawHouse(25, 450, 120, 150);
   drawStoplight();
-  drawDice(250, 350, 100, 3)
-  drawMario(400, 80, 10)
-  drawCharacter(400, 300, 10)
+  drawDice(250, 350, 100, 5);
+  drawMario(400, 80, 10);
+  drawCharacter(400, 300, 10);
+
+  draw3DCatLayer();
+  image(graphics3D, 70, 0);
+}
+
+function draw3DCatLayer() {
+  graphics3D.clear();
+
+  orbitAngle += -0.04;
+
+  let orbitRadius = 0;
+  let catX = cos(orbitAngle) * orbitRadius;
+  let catZ = sin(orbitAngle) * orbitRadius;
+
+  catScale = lerp(catScale, targetScale, 0.1);
+
+  graphics3D.push();
+  graphics3D.noStroke()
+  graphics3D.translate(catZ, 0, catX);
+  graphics3D.rotateX(PI);
+  graphics3D.rotateY(-orbitAngle + HALF_PI);
+  graphics3D.scale(catScale * 0.85);
+
+  if (catModel) {
+    graphics3D.texture(catTexture);
+    graphics3D.model(catModel);
+  }
+
+  graphics3D.pop();
 }
 
 function drawFlag() {
@@ -43,12 +91,11 @@ function drawCheckerboard(x, y, boardSize, size) {
     for (let col = 0; col < size; col++) {
 
       if ((row + col) % 2 === 0) {
-        fill(255);
+        fill("#fff8a9");
       } else {
         fill(0);
       }
       
-
       let tileX = x + col * tileSize;
       let tileY = y + row * tileSize;
 
@@ -94,14 +141,14 @@ function drawHouse(x, y, sz, alphaValue) {
 }
 
 function drawStoplight() {
-  fill(150)
-  stroke(0)
+  fill(150);
+  stroke(0);
   rect(250, 75, 100, 230);
-  fill("red")
+  fill("red");
   circle(300, 120, 60);
-  fill("orange")
+  fill("orange");
   circle(300, 190, 60);
-  fill("green")
+  fill("green");
   circle(300, 260, 60);
 }
 
@@ -232,7 +279,7 @@ function drawCharacter(x, y, pixelSize) {
       } else if (colorType === 5) {
         fill("#eec39a");
       } else if (colorType === 6) {
-        fill("#3f3f74")
+        fill("#3f3f74");
       } else if (colorType === 7) {
         fill("#5b6ee1");
       } else if (colorType === 8) {
