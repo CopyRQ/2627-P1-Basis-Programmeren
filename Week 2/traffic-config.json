@@ -1,0 +1,21 @@
+{
+  "forwardTraffic": {
+    "cars": [
+      { "position": -180, "color": "#d93636", "type": "sedan" },
+      { "position": -600, "color": "#2f80ed", "type": "van" },
+      { "position": -1020, "color": "#e0a12b", "type": "sports" },
+      { "position": -1440, "color": "#8b5cf6", "type": "pickup" }
+    ]
+  },
+  "reverseTraffic": {
+    "cars": [
+      { "position": 1980, "color": "#25a18e", "type": "van" },
+      { "position": 2380, "color": "#f06c9b", "type": "sports" },
+      { "position": 2780, "color": "#f4d35e", "type": "pickup" },
+      { "position": 3180, "color": "#6c757d", "type": "sedan" }
+    ]
+  },
+  "trafficLight": {
+    "durations": [600, 300, 140]
+  }
+}
