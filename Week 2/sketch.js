@@ -2,8 +2,8 @@ const SKY = "#aff8f8";
 const CANVAS_WIDTH = 1800;
 const CANVAS_HEIGHT = 900;
 const CLOUD_COUNT = 12;
-const CAR_SPEED = 5;
-const REVERSE_CAR_SPEED = 4;
+const CAR_SPEED = 6;
+const REVERSE_CAR_SPEED = 6;
 const CAR_MIN_GAP = 190;
 const BRAKING_ZONE = 220;
 
@@ -13,8 +13,11 @@ let sunX = CANVAS_WIDTH / 2;
 let sunSpeed = 1;
 let cars = [-180, -600, -1020, -1440];
 let carColors = ["#d93636", "#2f80ed", "#e0a12b", "#8b5cf6"];
+let carTypes = ["sedan", "van", "sports", "pickup"];
 let reverseCars = [1980, 2380, 2780, 3180];
 let reverseCarColors = ["#25a18e", "#f06c9b", "#f4d35e", "#6c757d"];
+let reverseCarTypes = ["van", "sports", "pickup", "sedan"];
+let reverseCarSpeeds = [REVERSE_CAR_SPEED, REVERSE_CAR_SPEED, REVERSE_CAR_SPEED, REVERSE_CAR_SPEED];
 let trafficLightState = 0;
 let trafficLightTimer = 0;
 let carSpeeds = [CAR_SPEED, CAR_SPEED, CAR_SPEED, CAR_SPEED];
@@ -85,7 +88,7 @@ function draw() {
 
   // The car stops 180 pixels before the traffic light.
   let trafficLightX = width - 150;
-  let carStopX = trafficLightX - 180;
+  let carStopX = trafficLightX - 220;
   drawTrafficLight(trafficLightX, 520, 0.65);
 
   // Cycle through red, green, and orange automatically.
@@ -94,24 +97,6 @@ function draw() {
     trafficLightState = (trafficLightState + 1) % 3;
     trafficLightTimer = 0;
 
-    // Decide which cars can still clear the intersection.
-    if (trafficLightState === 2) {
-      let framesLeft = lightDurations[2];
-      let safeStopDistance = CAR_MIN_GAP;
-
-      for (let i = 0; i < cars.length; i++) {
-        let d = carStopX - cars[i];
-        if (d <= 20) continue;
-
-        let timeToCross = d / CAR_SPEED;
-        let canClearInTime = timeToCross < framesLeft - 5;
-        let tooCloseToStop = d < safeStopDistance;
-
-        if (canClearInTime || tooCloseToStop) {
-          carCommitted[i] = true;
-        }
-      }
-    }
   }
 
   for (let i = 0; i < cars.length; i++) {
@@ -119,23 +104,22 @@ function draw() {
     let lightTargetSpeed = CAR_SPEED;
     let brakingZone = BRAKING_ZONE;
 
-    // Cars already past the light can continue at full speed.
-    if (distanceToLight <= -20) {
+    if (trafficLightState === 1) {
+      // Green: always go.
       lightTargetSpeed = CAR_SPEED;
-      carCommitted[i] = false;
-    } else if (carCommitted[i]) {
+    } else if (trafficLightState === 2 && distanceToLight <= 20) {
+      // Orange, and already at/past the stop line: too late to brake, continue through.
+      lightTargetSpeed = CAR_SPEED * 1.25;
+    } else if (distanceToLight > brakingZone) {
+      // Red (or orange from far away): plenty of room, cruise normally.
       lightTargetSpeed = CAR_SPEED;
-    } else if (trafficLightState === 1) {
-      lightTargetSpeed = CAR_SPEED;
+    } else if (distanceToLight > 0) {
+      // Approaching the line: decelerate smoothly.
+      let t = distanceToLight / brakingZone;
+      lightTargetSpeed = CAR_SPEED * t * t;
     } else {
-      if (distanceToLight > brakingZone) {
-        lightTargetSpeed = CAR_SPEED;
-      } else if (distanceToLight > 0) {
-        let t = distanceToLight / brakingZone;
-        lightTargetSpeed = CAR_SPEED * t * t;
-      } else {
-        lightTargetSpeed = 0;
-      }
+      // At or past the line on red: stay stopped, no matter how far momentum carried it.
+      lightTargetSpeed = 0;
     }
 
     let nextCarX = Infinity;
@@ -168,28 +152,51 @@ function draw() {
 
     cars[i] += carSpeeds[i];
 
-    if (nextCarX !== Infinity) {
-      cars[i] = min(cars[i], nextCarX - CAR_MIN_GAP);
-    }
-
     if (cars[i] > width + 180) {
       cars[i] = -180 - i * 260;
       carSpeeds[i] = CAR_SPEED;
       carCommitted[i] = false;
     }
 
-    drawCar(cars[i], height * 0.82, carColors[i]);
+    drawCar(cars[i], height * 0.82, carColors[i], 1, carTypes[i]);
   }
 
   for (let i = 0; i < reverseCars.length; i++) {
-    // Reverse-lane traffic moves independently of the light.
-    reverseCars[i] -= REVERSE_CAR_SPEED;
+    let nextReverseCarX = -Infinity;
+    for (let j = 0; j < reverseCars.length; j++) {
+      if (j !== i && reverseCars[j] < reverseCars[i] && reverseCars[j] > nextReverseCarX) {
+        nextReverseCarX = reverseCars[j];
+      }
+    }
+
+    let followTargetSpeed = REVERSE_CAR_SPEED;
+    let minGap = CAR_MIN_GAP;
+    let followZone = 260;
+
+    // Slow down smoothly when another car is too close ahead.
+    if (nextReverseCarX !== -Infinity) {
+      let gap = max(0, (reverseCars[i] - nextReverseCarX) - minGap);
+      if (gap < followZone) {
+        let t = gap / followZone;
+        followTargetSpeed = REVERSE_CAR_SPEED * t * t;
+      }
+    }
+
+    let targetSpeed = followTargetSpeed;
+
+    reverseCarSpeeds[i] = lerp(reverseCarSpeeds[i], targetSpeed, 0.05);
+    if (targetSpeed < 0.1 && reverseCarSpeeds[i] < 0.15) {
+      reverseCarSpeeds[i] = 0;
+    }
+
+    reverseCars[i] -= reverseCarSpeeds[i];
 
     if (reverseCars[i] < -180) {
       reverseCars[i] = width + 180 + i * 260;
+      reverseCarSpeeds[i] = REVERSE_CAR_SPEED;
     }
 
-    drawCar(reverseCars[i], height * 0.91, reverseCarColors[i], -1);
+    drawCar(reverseCars[i], height * 0.91, reverseCarColors[i], -1, reverseCarTypes[i]);
   }
 
   drawTree(1100, 800, 1.0);
@@ -289,20 +296,69 @@ function drawTrafficLight(x, y, size) {
   pop();
 }
 
-function drawCar(x, y, bodyColor, direction = 1) {
+function drawCar(x, y, bodyColor, direction = 1, type = "sedan") {
   push();
   translate(x, y);
   scale(direction, 1);
 
+  // subtle body shadow for depth
   noStroke();
+  fill(0, 0, 0, 25);
+  rect(2, 3, 150, 45, 8);
+
   fill(bodyColor);
   rect(0, 0, 150, 45, 8);
-  rect(35, -35, 80, 40, 8);
 
-  fill(120, 210, 225);
-  quad(45, -28, 75, -28, 75, -5, 42, -5);
-  quad(82, -28, 108, -28, 110, -5, 82, -5);
+  // soft highlight along the top edge of the body
+  fill(255, 255, 255, 35);
+  rect(6, 3, 138, 8, 4);
 
+  if (type === "van") {
+    fill(bodyColor);
+    rect(20, -48, 110, 53, 8);
+    fill(120, 210, 225);
+    rect(32, -40, 35, 25, 4);
+    rect(73, -40, 42, 25, 4);
+    stroke(0, 0, 0, 60);
+    strokeWeight(1.5);
+    line(52.5, -40, 52.5, -15);
+    noStroke();
+  } else if (type === "sports") {
+    fill(bodyColor);
+    quad(25, 0, 42, -30, 105, -30, 130, 0);
+    fill(120, 210, 225);
+    quad(48, -25, 72, -25, 68, -7, 42, -7);
+    quad(78, -25, 100, -25, 111, -7, 76, -7);
+  } else if (type === "pickup") {
+    fill(bodyColor);
+    rect(5, -25, 72, 25, 4);
+    rect(82, -38, 43, 38, 7);
+    fill(120, 210, 225);
+    quad(88, -31, 102, -31, 102, -8, 85, -8);
+    quad(106, -31, 119, -31, 122, -8, 106, -8);
+  } else {
+    fill(bodyColor);
+    rect(35, -35, 80, 40, 8);
+    fill(120, 210, 225);
+    quad(45, -28, 75, -28, 75, -5, 42, -5);
+    quad(82, -28, 108, -28, 110, -5, 82, -5);
+    stroke(0, 0, 0, 60);
+    strokeWeight(1.5);
+    line(78.5, -28, 78.5, -5);
+    noStroke();
+  }
+
+  // headlight and taillight
+  fill(255, 250, 210);
+  ellipse(145, 8, 8, 10);
+  fill(200, 40, 40);
+  ellipse(5, 8, 6, 9);
+
+  // bumper strip
+  fill(180);
+  rect(0, 38, 150, 5, 3);
+
+  // wheels with rims
   fill(25);
   circle(35, 45, 35);
   circle(115, 45, 35);
@@ -310,6 +366,22 @@ function drawCar(x, y, bodyColor, direction = 1) {
   fill(170);
   circle(35, 45, 14);
   circle(115, 45, 14);
+
+  fill(120);
+  circle(35, 45, 5);
+  circle(115, 45, 5);
+
+  stroke(220);
+  strokeWeight(2);
+  let wheelAngle = x * 0.12;
+  for (let wheelX of [35, 115]) {
+    push();
+    translate(wheelX, 45);
+    rotate(wheelAngle);
+    line(-8, 0, 8, 0);
+    line(0, -8, 0, 8);
+    pop();
+  }
 
   pop();
 }
