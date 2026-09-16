@@ -240,49 +240,77 @@ function drawTrafficLight(x, y, size) {
 }
 function drawCar(x, y, bodyColor, direction = 1, type = 'sedan') {
   push();
+  // Move the car and flip it when direction is -1.
   translate(x, y);
   scale(direction, 1);
   noStroke();
+  // Draw the shadow underneath the car.
   fill(0, 0, 0, 18);
-  rect(4, 6, 150, 44, 10);
+  ellipse(75, 43, 142, 15);
+  // Draw the car body in the chosen color.
   fill(bodyColor);
   if (type === 'van') {
-    rect(0, 0, 150, 54, 10);
-    rect(22, -28, 106, 28, 8);
+    // Van body and tall roof.
+    rect(0, 4, 150, 36);
+    quad(18, 4, 30, -29, 116, -29, 134, 4);
   } else if (type === 'sports') {
-    rect(0, 0, 150, 38, 10);
-    quad(22, 0, 48, -26, 102, -26, 128, 0);
+    // Sports car body and sloped roof.
+    rect(0, 14, 150, 26);
+    quad(18, 14, 55, -10, 98, -10, 128, 14);
   } else if (type === 'pickup') {
-    rect(0, 0, 150, 40, 10);
-    rect(92, -18, 52, 18, 6);
+    // Pickup body and raised cabin.
+    rect(0, 8, 150, 32);
+    quad(66, 8, 76, -20, 124, -20, 136, 8);
   } else {
-    rect(0, 0, 150, 40, 10);
-    rect(26, -20, 98, 20, 8);
+    // Regular sedan body and roof.
+    rect(0, 8, 150, 32);
+    quad(24, 8, 47, -18, 105, -18, 128, 8);
   }
+  // Draw the windows.
   fill(180, 220, 255);
   if (type === 'van') {
-    rect(32, -10, 40, 18, 4);
-    rect(78, -10, 40, 18, 4);
+    // Tall windows follow the van roof.
+    quad(29, -5, 34, -23, 68, -23, 68, -5);
+    quad(76, -5, 76, -23, 111, -23, 116, -5);
   } else if (type === 'sports') {
-    rect(38, -8, 32, 18, 4);
-    rect(78, -8, 32, 18, 4);
+    // Low slanted windows follow the sports-car roof.
+    quad(42, 9, 62, -5, 79, -5, 79, 9);
+    quad(84, 9, 84, -5, 98, -5, 114, 9);
   } else if (type === 'pickup') {
-    rect(34, -8, 28, 16, 4);
-    rect(70, -8, 28, 16, 4);
-    rect(104, -8, 20, 16, 4);
+    // Pickup window inside the angled cabin.
+    quad(78, 3, 83, -15, 118, -15, 128, 3);
   } else {
-    rect(34, -8, 30, 16, 4);
-    rect(72, -8, 30, 16, 4);
-    rect(110, -8, 10, 16, 4);
+    // Sedan windows follow the curved roof shape.
+    quad(34, 3, 49, -12, 67, -12, 67, 3);
+    quad(75, 3, 75, -12, 99, -12, 116, 3);
   }
+  // Draw the tires.
   fill(35);
-  circle(36, 52, 26);
-  circle(114, 52, 26);
+  circle(36, 42, 26);
+  circle(114, 42, 26);
+  // Draw the wheel centers.
   fill(180);
-  circle(36, 52, 12);
-  circle(114, 52, 12);
+  circle(36, 42, 12);
+  circle(114, 42, 12);
+
+  // The wheel angle follows the distance travelled, so stopped cars stop spinning.
+  let wheelRotation = (x / 13) * direction;
+  drawWheelSpokes(36, 42, wheelRotation);
+  drawWheelSpokes(114, 42, wheelRotation);
   pop();
 }
+
+function drawWheelSpokes(x, y, wheelRotation) {
+  push();
+  translate(x, y);
+  rotate(wheelRotation);
+  stroke(70);
+  strokeWeight(2);
+  line(-4, 0, 4, 0);
+  line(0, -4, 0, 4);
+  pop();
+}
+
 function keyPressed() {
   if (keyCode === ENTER) {
     trafficLightState = (trafficLightState + 1) % 3;
