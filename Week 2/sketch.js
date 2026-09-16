@@ -1,9 +1,9 @@
-const SKY = "#aff8f8";
+const SKY = '#aff8f8';
 const CANVAS_WIDTH = 1800;
 const CANVAS_HEIGHT = 900;
 const CLOUD_COUNT = 12;
-const CAR_SPEED = 6;
-const REVERSE_CAR_SPEED = 6;
+const CAR_SPEED = 8;
+const REVERSE_CAR_SPEED = 8;
 const CAR_MIN_GAP = 190;
 const BRAKING_ZONE = 220;
 
@@ -12,11 +12,11 @@ let clouds = [];
 let sunX = CANVAS_WIDTH / 2;
 let sunSpeed = 1;
 let cars = [-180, -600, -1020, -1440];
-let carColors = ["#d93636", "#2f80ed", "#e0a12b", "#8b5cf6"];
-let carTypes = ["sedan", "van", "sports", "pickup"];
+let carColors = ['#d93636', '#2f80ed', '#e0a12b', '#8b5cf6'];
+let carTypes = ['sedan', 'van', 'sports', 'pickup'];
 let reverseCars = [1980, 2380, 2780, 3180];
-let reverseCarColors = ["#25a18e", "#f06c9b", "#f4d35e", "#6c757d"];
-let reverseCarTypes = ["van", "sports", "pickup", "sedan"];
+let reverseCarColors = ['#25a18e', '#f06c9b', '#f4d35e', '#6c757d'];
+let reverseCarTypes = ['van', 'sports', 'pickup', 'sedan'];
 let reverseCarSpeeds = [REVERSE_CAR_SPEED, REVERSE_CAR_SPEED, REVERSE_CAR_SPEED, REVERSE_CAR_SPEED];
 let trafficLightState = 0;
 let trafficLightTimer = 0;
@@ -57,7 +57,7 @@ function setup() {
   }
 }
 
-function draw() { 
+function draw() {
   background(SKY);
 
   // Move the sun between the two sides of the scene.
@@ -96,7 +96,6 @@ function draw() {
   if (trafficLightTimer >= lightDurations[trafficLightState]) {
     trafficLightState = (trafficLightState + 1) % 3;
     trafficLightTimer = 0;
-
   }
 
   for (let i = 0; i < cars.length; i++) {
@@ -135,7 +134,7 @@ function draw() {
 
     // Slow down smoothly when another car is too close ahead.
     if (nextCarX !== Infinity) {
-      let gap = max(0, (nextCarX - cars[i]) - minGap);
+      let gap = max(0, nextCarX - cars[i] - minGap);
       if (gap < followZone) {
         let t = gap / followZone;
         followTargetSpeed = CAR_SPEED * t * t;
@@ -175,7 +174,7 @@ function draw() {
 
     // Slow down smoothly when another car is too close ahead.
     if (nextReverseCarX !== -Infinity) {
-      let gap = max(0, (reverseCars[i] - nextReverseCarX) - minGap);
+      let gap = max(0, reverseCars[i] - nextReverseCarX - minGap);
       if (gap < followZone) {
         let t = gap / followZone;
         followTargetSpeed = REVERSE_CAR_SPEED * t * t;
@@ -296,7 +295,7 @@ function drawTrafficLight(x, y, size) {
   pop();
 }
 
-function drawCar(x, y, bodyColor, direction = 1, type = "sedan") {
+function drawCar(x, y, bodyColor, direction = 1, type = 'sedan') {
   push();
   translate(x, y);
   scale(direction, 1);
@@ -313,7 +312,7 @@ function drawCar(x, y, bodyColor, direction = 1, type = "sedan") {
   fill(255, 255, 255, 35);
   rect(6, 3, 138, 8, 4);
 
-  if (type === "van") {
+  if (type === 'van') {
     fill(bodyColor);
     rect(20, -48, 110, 53, 8);
     fill(120, 210, 225);
@@ -323,13 +322,13 @@ function drawCar(x, y, bodyColor, direction = 1, type = "sedan") {
     strokeWeight(1.5);
     line(52.5, -40, 52.5, -15);
     noStroke();
-  } else if (type === "sports") {
+  } else if (type === 'sports') {
     fill(bodyColor);
     quad(25, 0, 42, -30, 105, -30, 130, 0);
     fill(120, 210, 225);
     quad(48, -25, 72, -25, 68, -7, 42, -7);
     quad(78, -25, 100, -25, 111, -7, 76, -7);
-  } else if (type === "pickup") {
+  } else if (type === 'pickup') {
     fill(bodyColor);
     rect(5, -25, 72, 25, 4);
     rect(82, -38, 43, 38, 7);
