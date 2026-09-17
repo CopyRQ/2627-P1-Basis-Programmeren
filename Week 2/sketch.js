@@ -15,7 +15,7 @@ const TRAFFIC_LIGHT_X_OFFSET = 150;
 const TRAFFIC_LIGHT_Y = 520;
 const TRAFFIC_LIGHT_SIZE = 0.65;
 const FORWARD_CAR_Y = 0.82;
-const REVERSE_CAR_Y = 0.91;
+const REVERSE_CAR_Y = 0.9;
 
 // Scene state
 let trafficConfig;
