@@ -6,3 +6,7 @@ html, body {
 canvas {
   display: flex;
 }
+
+button{
+  left:auto;
+}
