@@ -53,11 +53,30 @@ function draw() {
       let cellX = gridOffsetX + column * cellSize;
       let cellY = gridOffsetY + row * cellSize;
 
+      // Check if the mouse is hovering over this cell
+      let isHovering =
+        mouseX > cellX + cellGap / 2 &&
+        mouseX < cellX + cellSize - cellGap / 2 &&
+        mouseY > cellY + cellGap / 2 &&
+        mouseY < cellY + cellSize - cellGap / 2;
+
       // Draw the cell background
-      fill(255);
-      stroke(0);
+      if (isHovering && grid[column][row] === 0 && gameState === 'playing') {
+        fill('#e8e8e8');
+        stroke('#777777');
+        cursor(HAND);
+      } else {
+        fill(255);
+        stroke(0);
+      }
+
       strokeWeight(2);
-      rect(cellX + cellGap / 2, cellY + cellGap / 2, cellSize - cellGap, cellSize - cellGap);
+      rect(
+        cellX + cellGap / 2,
+        cellY + cellGap / 2,
+        cellSize - cellGap,
+        cellSize - cellGap
+      );
 
       // Draw a circle (O) for Blue (player 2)
       if (grid[column][row] === 2) {
