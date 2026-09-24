@@ -10,10 +10,8 @@ function draw() {
 
   background(0);
 
-
   let duration = 6000 // how long the shapes stay
   art = art.filter(shapeData => millis() - shapeData.timestamp < duration) 
-  
 
   generateArt(); // calls generate art
 
@@ -29,6 +27,7 @@ function draw() {
       shapeData.strokeW,
     )
   };
+
 };
 
 function generateArt () {
@@ -57,9 +56,11 @@ function generateArt () {
         });
     };
   };
+
 };
 
 function generateShapes (x,y, color, type, rotation, size, strokeW) {
+
   push();
 
   translate(x, y);
@@ -84,4 +85,5 @@ function generateShapes (x,y, color, type, rotation, size, strokeW) {
   }
   
   pop(); // so if i had other functions with shape generation it woudnt effect those
+  
 };
