@@ -20,6 +20,16 @@ let gameOverSoundPlayed = false;
 
 let transitionAmount = 0; // 0 = fully red, 1 = fully blue
 
+// Freddy video variables
+let freddyVideo;
+let isFreddyPlaying = false;
+
+function preload() {
+  // Load video with greenscreen
+  freddyVideo = createVideo(['freddy.mp4']);
+  freddyVideo.hide(); // Hide native DOM HTML element so we can draw it on the p5 canvas
+}
+
 async function setup() {
 
   createCanvas(1878, 956);
@@ -28,11 +38,17 @@ async function setup() {
   mySound2 = await loadSound('win.mp3');
   mySound.setVolume(0.1);
   mySound2.setVolume(0.3);
+  freddyVideo.volume(0.5);
 
   // Calculate offsets to center the grid on the canvas
   // Grid offset specifies where the center of the board is to draw the squares around it
   gridOffsetX = (width - numberOfColumns * cellSize) / 2;
   gridOffsetY = (height - numberOfRows * cellSize) / 2;
+
+  // Handle when video ends
+  freddyVideo.onended(() => {
+    isFreddyPlaying = false;
+  });
 
 }
 
@@ -53,6 +69,11 @@ function draw() {
   let currentBackgroundColor = lerpColor(redColor, blueColor, transitionAmount);
   background(currentBackgroundColor);
   cursor(ARROW);
+
+  // Check for 1/10000 chance per frame to trigger Freddy
+  if (!isFreddyPlaying && random(1) < 1 / 10000) {
+    triggerFreddy();
+  }
 
   // Draw the grid
   for (let column = 0; column < numberOfColumns; column++) {
@@ -149,11 +170,11 @@ function draw() {
     let restartY = height * 0.9;
 
     // Hover detection based on the text-fitted box
-    let isHoveringOverRestartButton =
-      mouseX > restartX - boxWidth / 2 &&
-      mouseX < restartX + boxWidth / 2 &&
-      mouseY > restartY - boxHeight / 2 &&
-      mouseY < restartY + boxHeight / 2;
+    let isHoveringOverRestartButton = 
+    mouseX > restartX - boxWidth / 2 &&
+    mouseX < restartX + boxWidth / 2 &&
+    mouseY > restartY - boxHeight / 2 &&
+    mouseY < restartY + boxHeight / 2;
 
     // Draw box
     if (isHoveringOverRestartButton) {
@@ -180,6 +201,51 @@ function draw() {
 
   updateConfetti();
 
+  // Render video with greenscreen chromakey removal
+  if (isFreddyPlaying) {
+    drawFreddyGreenScreen();
+  }
+
+}
+
+// Keypress listener for pressing 'U' or 'u'
+function keyPressed() {
+  if (key === 'u' || key === 'U') {
+    triggerFreddy();
+  }
+}
+
+function triggerFreddy() {
+  isFreddyPlaying = true;
+  freddyVideo.stop();
+  freddyVideo.play();
+}
+
+function drawFreddyGreenScreen() {
+  freddyVideo.loadPixels();
+  if (freddyVideo.pixels.length > 0) {
+    let img = createImage(freddyVideo.width, freddyVideo.height);
+    img.loadPixels();
+
+    // Loop through video pixels and remove green canvas background
+    for (let i = 0; i < freddyVideo.pixels.length; i += 4) {
+      let r = freddyVideo.pixels[i];
+      let g = freddyVideo.pixels[i + 1];
+      let b = freddyVideo.pixels[i + 2];
+
+      // Green screen detection condition
+      if (g > 100 && r < 100 && b < 100) {
+        img.pixels[i + 3] = 0; // Make pixel transparent
+      } else {
+        img.pixels[i] = r;
+        img.pixels[i + 1] = g;
+        img.pixels[i + 2] = b;
+        img.pixels[i + 3] = 255;
+      }
+    }
+    img.updatePixels();
+    image(img, 0, 0, width, height);
+  }
 }
 
 // Handle mouse clicks

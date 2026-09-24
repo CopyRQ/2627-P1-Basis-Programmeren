@@ -43,6 +43,6 @@ function mousePressed (){
    if (clickedColumn >= 0 && clickedColumn < numberOfColumns && clickedRow >= 0 && clickedRow < numberOfRows) 
     { 
     // when you click on any of the boxes in the grid this executes 
-    text
+    text("hello",random(0,1200),random(0,800))
    }
 }

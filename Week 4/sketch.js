@@ -68,7 +68,7 @@ function generateShapes (x,y, color, type, rotation, size, strokeW) {
   stroke("#333030")
   strokeWeight(strokeW)
   fill(color);
-  
+
   switch(type){ // switches between the diffrent shapes
     case "circle":
       circle(20,20,size);
