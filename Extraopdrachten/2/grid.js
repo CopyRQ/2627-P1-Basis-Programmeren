@@ -40,12 +40,8 @@ function mousePressed (){
   let clickedColumn = floor((mouseX - gridOffsetX) / cellSize);
   let clickedRow = floor((mouseY - gridOffsetY) / cellSize);
 
-   if (
-    clickedColumn >= 0 &&
-    clickedColumn < numberOfColumns &&
-    clickedRow >= 0 &&
-    clickedRow < numberOfRows
-  ) { 
+   if (clickedColumn >= 0 && clickedColumn < numberOfColumns && clickedRow >= 0 && clickedRow < numberOfRows) 
+    { 
     // when you click on any of the boxes in the grid this executes 
     text
    }

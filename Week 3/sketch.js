@@ -21,6 +21,7 @@ let gameOverSoundPlayed = false;
 let transitionAmount = 0; // 0 = fully red, 1 = fully blue
 
 async function setup() {
+
   createCanvas(1878, 956);
 
   mySound = await loadSound('weird-route-jingle.mp3');
@@ -32,9 +33,11 @@ async function setup() {
   // Grid offset specifies where the center of the board is to draw the squares around it
   gridOffsetX = (width - numberOfColumns * cellSize) / 2;
   gridOffsetY = (height - numberOfRows * cellSize) / 2;
+
 }
 
 function draw() {
+
   let targetAmount;
 
   if (gameState === 'game_over') {
@@ -176,10 +179,12 @@ function draw() {
   }
 
   updateConfetti();
+
 }
 
 // Handle mouse clicks
 function mousePressed() {
+
   // Calculate which cell was clicked (taking offsets into account)
   let clickedColumn = floor((mouseX - gridOffsetX) / cellSize);
   let clickedRow = floor((mouseY - gridOffsetY) / cellSize);
@@ -225,9 +230,11 @@ function mousePressed() {
   }
 
   checkWinner();
+
 }
 
 function checkWinner() {
+
   // Check all rows and columns
   for (let lineIndex = 0; lineIndex < 3; lineIndex++) {
     // Check row lineIndex
@@ -280,6 +287,7 @@ function checkWinner() {
 }
 
 function restartGame() {
+
   // Reset all cells to empty
   for (let column = 0; column < 3; column++) {
     for (let row = 0; row < 3; row++) {

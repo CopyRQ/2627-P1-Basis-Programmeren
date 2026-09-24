@@ -68,7 +68,7 @@ function generateShapes (x,y, color, type, rotation, size, strokeW) {
   stroke("#333030")
   strokeWeight(strokeW)
   fill(color);
-
+  
   switch(type){ // switches between the diffrent shapes
     case "circle":
       circle(20,20,size);
@@ -85,5 +85,5 @@ function generateShapes (x,y, color, type, rotation, size, strokeW) {
   }
   
   pop(); // so if i had other functions with shape generation it woudnt effect those
-  
+
 };
