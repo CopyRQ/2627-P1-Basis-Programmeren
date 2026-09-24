@@ -10,12 +10,15 @@ let numberOfColumns = 3;
 let numberOfRows = 3;
 let cellSize = 200; // Width and height of each cell in pixels
 let cellGap = 20; // Gap between cells in pixels
+
 let gridOffsetX, gridOffsetY; // Distance from the edge of the canvas to the grid
+
 let currentPlayer = 1; // 1 = Red, 2 = Blue
 let gameState = 'playing';
 let winner;
-let transitionAmount = 0; // 0 = fully red, 1 = fully blue
 let gameOverSoundPlayed = false;
+
+let transitionAmount = 0; // 0 = fully red, 1 = fully blue
 
 async function setup() {
   createCanvas(1878, 956);
@@ -26,6 +29,7 @@ async function setup() {
   mySound2.setVolume(0.3);
 
   // Calculate offsets to center the grid on the canvas
+  // Grid offset specifies where the center of the board is to draw the squares around it
   gridOffsetX = (width - numberOfColumns * cellSize) / 2;
   gridOffsetY = (height - numberOfRows * cellSize) / 2;
 }
@@ -40,7 +44,7 @@ function draw() {
     targetAmount = currentPlayer === 1 ? 0 : 1;
   }
 
-  transitionAmount = lerp(transitionAmount, targetAmount, 0.1);
+  transitionAmount = lerp(transitionAmount, targetAmount, 0.1); // Linear interpolation
   let redColor = color('#e60b0b');
   let blueColor = color('#0329ff');
   let currentBackgroundColor = lerpColor(redColor, blueColor, transitionAmount);
@@ -71,12 +75,7 @@ function draw() {
       }
 
       strokeWeight(2);
-      rect(
-        cellX + cellGap / 2,
-        cellY + cellGap / 2,
-        cellSize - cellGap,
-        cellSize - cellGap
-      );
+      rect(cellX + cellGap / 2, cellY + cellGap / 2, cellSize - cellGap, cellSize - cellGap);
 
       // Draw a circle (O) for Blue (player 2)
       if (grid[column][row] === 2) {
@@ -179,57 +178,6 @@ function draw() {
   updateConfetti();
 }
 
-function updateConfetti() {
-  // Keep generating confetti while the win sound is playing
-  if (mySound2.isPlaying()) {
-    for (let i = 0; i < 6; i++) {
-      confetti.push({
-        x: random(width),
-        y: random(-50, -10),
-        size: random(8, 16),
-        speedY: random(2, 6),
-        speedX: random(-2, 2),
-        rotation: random(TWO_PI),
-        rotationSpeed: random(-0.1, 0.1),
-        color: random([
-          '#ff0000',
-          '#00ff00',
-          '#0000ff',
-          '#ffff00',
-          '#ff00ff',
-          '#00ffff',
-          '#ffffff',
-        ]),
-      });
-    }
-  }
-
-  // Update and draw confetti
-  for (let i = confetti.length - 1; i >= 0; i--) {
-    let piece = confetti[i];
-
-    piece.x += piece.speedX;
-    piece.y += piece.speedY;
-    piece.rotation += piece.rotationSpeed;
-
-    push();
-    translate(piece.x, piece.y);
-    rotate(piece.rotation);
-
-    fill(piece.color);
-    noStroke();
-    rectMode(CENTER);
-    rect(0, 0, piece.size, piece.size * 0.6);
-
-    pop();
-
-    // Remove confetti that has fallen off screen
-    if (piece.y > height + 50) {
-      confetti.splice(i, 1);
-    }
-  }
-}
-
 // Handle mouse clicks
 function mousePressed() {
   // Calculate which cell was clicked (taking offsets into account)
@@ -243,6 +191,7 @@ function mousePressed() {
     clickedRow >= 0 &&
     clickedRow < numberOfRows
   ) {
+    // when you click on any of the boxes in the grid this executes
     if (grid[clickedColumn][clickedRow] === 0 && gameState === 'playing') {
       grid[clickedColumn][clickedRow] = currentPlayer;
 
@@ -343,4 +292,55 @@ function restartGame() {
   currentPlayer = 1;
   winner = undefined;
   confetti = [];
+}
+
+function updateConfetti() {
+  // Keep generating confetti while the win sound is playing
+  if (mySound2.isPlaying()) {
+    for (let i = 0; i < 6; i++) {
+      confetti.push({
+        x: random(width),
+        y: random(-50, -10),
+        size: random(8, 16),
+        speedY: random(2, 6),
+        speedX: random(-2, 2),
+        rotation: random(TWO_PI),
+        rotationSpeed: random(-0.1, 0.1),
+        color: random([
+          '#ff0000',
+          '#00ff00',
+          '#0000ff',
+          '#ffff00',
+          '#ff00ff',
+          '#00ffff',
+          '#ffffff',
+        ]),
+      });
+    }
+  }
+
+  // Update and draw confetti
+  for (let i = confetti.length - 1; i >= 0; i--) {
+    let piece = confetti[i];
+
+    piece.x += piece.speedX;
+    piece.y += piece.speedY;
+    piece.rotation += piece.rotationSpeed;
+
+    push();
+    translate(piece.x, piece.y);
+    rotate(piece.rotation);
+
+    fill(piece.color);
+    noStroke();
+    rectMode(CENTER);
+    rect(0, 0, piece.size, piece.size * 0.6);
+
+    pop();
+
+    // Remove confetti that has fallen off screen
+    if (piece.y > height + 50) {
+      confetti.splice(i, 1);
+    }
+  }
 }

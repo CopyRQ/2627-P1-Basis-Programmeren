@@ -8,14 +8,10 @@ let numberOfRows = 3;
 let cellSize = 200; // Width and height of each cell in pixels
 let cellGap = 20; // Gap between cells in pixels
 
-
 let gridOffsetX, gridOffsetY; // Distance from the edge of the canvas to the grid
 
 async function setup() {
   createCanvas(1200, 800);
-
-  mySound = await loadSound('/Week 3/weird-route-jingle.mp3');
-  mySound.setVolume(0.1)
 
   gridOffsetX = (width - numberOfColumns * cellSize) / 2;
   gridOffsetY = (height - numberOfRows * cellSize) / 2;
@@ -50,6 +46,7 @@ function mousePressed (){
     clickedRow >= 0 &&
     clickedRow < numberOfRows
   ) { 
-    mySound.play();
+    // when you click on any of the boxes in the grid this executes 
+    text
    }
 }
