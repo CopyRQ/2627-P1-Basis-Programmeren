@@ -28,7 +28,7 @@ let trafficLightState = 0;
 let trafficLightTimer = 0;
 
 function preload() {
-  trafficConfig = loadJSON('./traffic-config.json');
+  trafficConfig = loadJSON('/../traffic-config.json');
 }
 
 function setup() {
