@@ -84,7 +84,7 @@ function draw() {
 // schokgolf bij het klikken van de muis
 function mouseClicked() {
   let shockwaveRadius = 500;
-  let shockwavePower = 35;
+  let shockwavePower = 100;
 
   for (let i = 0; i < art.length; i++) {
     let shapeData = art[i];
@@ -103,6 +103,7 @@ function mouseClicked() {
 
 // genereer nieuwe vormen
 function generateArt() {
+  
   for (let i = 0; i < 5; i++) {
     // controleer of de backspace toets is ingedrukt
     if (keyIsDown(8)) {
@@ -135,8 +136,10 @@ function generateArt() {
         pulseSpeed: random(0.02, 0.05),
         pulseOffset: random(0, TWO_PI)
       });
+      console.log(art)
     }
   }
+  
 }
 
 // teken een specifieke vorm
