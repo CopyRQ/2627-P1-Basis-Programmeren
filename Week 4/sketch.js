@@ -44,9 +44,6 @@ function draw() {
       shapeData.vy *= -1;
     }
 
-    // bereken het kloppende effect
-    let pulseFactor = 1 + sin(frameCount * shapeData.pulseSpeed + shapeData.pulseOffset) * 0.3;
-
     // bereken de afstand tot de muis
     let d = dist(mouseX, mouseY, shapeData.x, shapeData.y);
     let mouseRadius = 100;
@@ -65,8 +62,28 @@ function draw() {
       hoverScale = 1 + force * 0.3;
     }
 
-    // bereken de uiteindelijke grootte van de vorm
-    let currentSize = shapeData.size * pulseFactor * hoverScale;
+    // Calculate pop progress (0.0 to 1.0 over 350ms)
+    let age = millis() - shapeData.timestamp;
+    let popDuration = 350;
+    let progress = constrain(age / popDuration, 0, 1);
+
+    // Elastic pop scale: starts at 0, overshoots to ~1.2, settles at 1.0
+    let popScale = 1;
+    if (progress < 1) {
+      // Custom overshoot curve (Back ease-out)
+      let c1 = 1.70158;
+      let c3 = c1 + 1;
+      let p = progress - 1;
+      popScale = 1 + c3 * Math.pow(p, 3) + c1 * Math.pow(p, 2);
+    }
+
+    // Blend the pulse factor in as the pop animation finishes to eliminate jarring jumps
+    let basePulse =
+      sin(frameCount * shapeData.pulseSpeed + shapeData.pulseOffset) * 0.3;
+    let pulseFactor = 1 + basePulse * progress;
+
+    // Final smooth size
+    let currentSize = shapeData.size * popScale * pulseFactor * hoverScale;
 
     // teken de vorm op het scherm
     generateShapes(
@@ -76,7 +93,7 @@ function draw() {
       shapeData.type,
       shapeData.rotation,
       currentSize,
-      shapeData.strokeW
+      shapeData.strokeW,
     );
   }
 }
@@ -103,22 +120,20 @@ function mouseClicked() {
 
 // genereer nieuwe vormen
 function generateArt() {
-  
   for (let i = 0; i < 5; i++) {
     // controleer of de backspace toets is ingedrukt
     if (keyIsDown(8)) {
       let randX = floor(random(0, width));
       let randY = floor(random(0, height));
-      let colors = [
-        "#FF0000", "#FF7F00", "#FFFF00", "#00FF00",
-        "#0000FF", "#4B0082", "#ff00ea", "#00e1ff"
-      ];
+      let colors = ["#FF0000","#FF7F00","#FFFF00","#00FF00",
+                    "#0000FF","#4B0082","#ff00ea","#00e1ff",];
       let randColor = random(colors);
       let shapes = ["square", "circle", "triangle", "ellipse", "heart"];
       let randShape = random(shapes);
       let randRotation = random(0, TWO_PI);
       let randSize = random(50, 125);
       let randStrokeWeight = random(0, 24);
+      let pSpeed = random(0.02, 0.05);
 
       // voeg de nieuwe vorm toe aan de array
       art.push({
@@ -133,13 +148,11 @@ function generateArt() {
         rotation: randRotation,
         size: randSize,
         strokeW: randStrokeWeight,
-        pulseSpeed: random(0.02, 0.05),
-        pulseOffset: random(0, TWO_PI)
+        pulseSpeed: pSpeed,
+        pulseOffset: -frameCount * pSpeed,
       });
-      console.log(art)
     }
   }
-  
 }
 
 // teken een specifieke vorm
