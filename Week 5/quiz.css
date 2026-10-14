@@ -1,0 +1,21 @@
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #101419;
+  font-family: Arial, sans-serif;
+}
+
+canvas {
+  display: block;
+  width: min(100vw, calc(100vh * 16 / 9)) !important;
+  height: min(100vh, calc(100vw * 9 / 16)) !important;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}

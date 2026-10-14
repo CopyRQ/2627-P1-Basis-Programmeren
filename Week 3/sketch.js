@@ -22,7 +22,7 @@ let transitionAmount = 0; // 0 = fully red, 1 = fully blue
 
 async function setup() {
 
-  createCanvas(1878, 956);
+  createCanvas(1920, 1080);
 
   mySound = await loadSound('weird-route-jingle.mp3');
   mySound2 = await loadSound('win.mp3');

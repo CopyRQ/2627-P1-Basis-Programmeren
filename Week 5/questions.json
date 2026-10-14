@@ -1,0 +1,196 @@
+[
+  {
+    "naam": "Games from My Library",
+    "kleur": "#14233a",
+    "accent": "#547a98",
+    "vragen": [
+      {
+        "vraag": "In Warframe, which resource is used to upgrade a Mod's rank?",
+        "antwoorden": [
+          { "tekst": "Endo", "goed": true },
+          { "tekst": "Forma", "goed": false },
+          { "tekst": "Orokin Catalyst", "goed": false },
+          { "tekst": "Kuva", "goed": false }
+        ]
+      },
+      {
+        "vraag": "What name is given to the player character in Elden Ring?",
+        "antwoorden": [
+          { "tekst": "The Tarnished", "goed": true },
+          { "tekst": "The Ashen One", "goed": false },
+          { "tekst": "The Hunter", "goed": false },
+          { "tekst": "The Bearer of the Curse", "goed": false }
+        ]
+      },
+      {
+        "vraag": "On The Island in ARK: Survival Evolved, which boss is fought at the end of the Tek Cave?",
+        "antwoorden": [
+          { "tekst": "The Overseer", "goed": true },
+          { "tekst": "The Broodmother", "goed": false },
+          { "tekst": "The Dragon", "goed": false },
+          { "tekst": "The Megapithecus", "goed": false }
+        ]
+      },
+      {
+        "vraag": "In Deadlock, what is the final enemy objective a team must destroy to win?",
+        "antwoorden": [
+          { "tekst": "The Patron", "goed": true },
+          { "tekst": "The Walker", "goed": false },
+          { "tekst": "The Guardian", "goed": false },
+          { "tekst": "The Shrine", "goed": false }
+        ]
+      },
+      {
+        "vraag": "In Marvel Rivals, what makes a Team-Up ability available?",
+        "antwoorden": [
+          { "tekst": "Picking a specific combination of heroes", "goed": true },
+          { "tekst": "Capturing every objective on the map", "goed": false },
+          { "tekst": "Filling the ultimate meter twice", "goed": false },
+          { "tekst": "Changing heroes during a round", "goed": false }
+        ]
+      },
+      {
+        "vraag": "In Overwatch, what is the main job of a Tank in a team fight?",
+        "antwoorden": [
+          { "tekst": "Create space and help protect teammates", "goed": true },
+          { "tekst": "Capture every objective alone", "goed": false },
+          { "tekst": "Repair damaged payloads", "goed": false },
+          { "tekst": "Choose the next map", "goed": false }
+        ]
+      },
+      {
+        "vraag": "In Bloons TD 6, how many upgrade paths can a single tower use at the same time?",
+        "antwoorden": [
+          { "tekst": "Two, with one path limited to tier 2", "goed": true },
+          { "tekst": "All three, up to tier 5 each", "goed": false },
+          { "tekst": "One path only, up to tier 3", "goed": false },
+          { "tekst": "Two paths, both up to tier 5", "goed": false }
+        ]
+      },
+      {
+        "vraag": "In Helldivers 2, what is a Stratagem used for?",
+        "antwoorden": [
+          { "tekst": "Calling support such as equipment or an airstrike", "goed": true },
+          { "tekst": "Changing a Helldiver's permanent class", "goed": false },
+          { "tekst": "Reviving every player on the planet", "goed": false },
+          { "tekst": "Choosing which enemy faction appears", "goed": false }
+        ]
+      },
+      {
+        "vraag": "In Apex Legends, what can a squadmate do with your banner after you are eliminated?",
+        "antwoorden": [
+          { "tekst": "Take it to a Respawn Beacon to bring you back", "goed": true },
+          { "tekst": "Use it to upgrade your body shield", "goed": false },
+          { "tekst": "Trade it for a care package weapon", "goed": false },
+          { "tekst": "Activate it to reveal the next ring", "goed": false }
+        ]
+      },
+      {
+        "vraag": "In Scrap Mechanic, which part lets a player steer a powered creation?",
+        "antwoorden": [
+          { "tekst": "Driver's Seat", "goed": true },
+          { "tekst": "Lift", "goed": false },
+          { "tekst": "Controller", "goed": false },
+          { "tekst": "Thruster", "goed": false }
+        ]
+      }
+    ]
+  },
+  {
+    "naam": "Terraria",
+    "kleur": "#142c2a",
+    "accent": "#718c5d",
+    "vragen": [
+      {
+        "vraag": "How do you summon the Wall of Flesh in a standard world?",
+        "antwoorden": [
+          { "tekst": "Drop a Guide Voodoo Doll into lava in the Underworld", "goed": true },
+          { "tekst": "Use a Mechanical Skull at night", "goed": false },
+          { "tekst": "Break three Shadow Orbs in the Corruption", "goed": false },
+          { "tekst": "Throw a Life Crystal into the Shimmer", "goed": false }
+        ]
+      },
+      {
+        "vraag": "What event begins after the Wall of Flesh is defeated?",
+        "antwoorden": [
+          { "tekst": "Hardmode", "goed": true },
+          { "tekst": "The Lunar Events", "goed": false },
+          { "tekst": "The Old One's Army", "goed": false },
+          { "tekst": "The Pumpkin Moon", "goed": false }
+        ]
+      },
+      {
+        "vraag": "When can Plantera's Bulbs start appearing in the Underground Jungle?",
+        "antwoorden": [
+          { "tekst": "After all three mechanical bosses are defeated", "goed": true },
+          { "tekst": "As soon as Hardmode begins", "goed": false },
+          { "tekst": "After defeating the Wall of Flesh but before any mech boss", "goed": false },
+          { "tekst": "Only after the Golem is defeated", "goed": false }
+        ]
+      },
+      {
+        "vraag": "What does the Goblin Tinkerer let you do to weapons and accessories?",
+        "antwoorden": [
+          { "tekst": "Reforge them for a different modifier", "goed": true },
+          { "tekst": "Upgrade them with Life Crystals", "goed": false },
+          { "tekst": "Turn them into permanent buffs", "goed": false },
+          { "tekst": "Duplicate them for free", "goed": false }
+        ]
+      },
+      {
+        "vraag": "Which station is needed to combine certain accessories?",
+        "antwoorden": [
+          { "tekst": "Tinker's Workshop", "goed": true },
+          { "tekst": "Heavy Work Bench", "goed": false },
+          { "tekst": "Imbuing Station", "goed": false },
+          { "tekst": "Autohammer", "goed": false }
+        ]
+      },
+      {
+        "vraag": "What does a Life Fruit increase?",
+        "antwoorden": [
+          { "tekst": "Maximum health, after reaching 400 health", "goed": true },
+          { "tekst": "Maximum mana, after reaching 200 mana", "goed": false },
+          { "tekst": "Movement speed while underground", "goed": false },
+          { "tekst": "The number of accessory slots", "goed": false }
+        ]
+      },
+      {
+        "vraag": "Which ammunition does the Star Cannon consume?",
+        "antwoorden": [
+          { "tekst": "Fallen Stars", "goed": true },
+          { "tekst": "Meteorite Bars", "goed": false },
+          { "tekst": "Musket Balls", "goed": false },
+          { "tekst": "Crystal Shards", "goed": false }
+        ]
+      },
+      {
+        "vraag": "How do you make an ordinary NPC move into a suitable house?",
+        "antwoorden": [
+          { "tekst": "Provide valid housing and meet that NPC's arrival condition", "goed": true },
+          { "tekst": "Place a bed and wait until midnight", "goed": false },
+          { "tekst": "Defeat a boss while standing inside the house", "goed": false },
+          { "tekst": "Put the NPC's preferred item in a chest", "goed": false }
+        ]
+      },
+      {
+        "vraag": "What happens when the Lunatic Cultist is defeated?",
+        "antwoorden": [
+          { "tekst": "The four Celestial Pillars appear", "goed": true },
+          { "tekst": "The Dungeon entrance opens for the first time", "goed": false },
+          { "tekst": "The Wall of Flesh is summoned again", "goed": false },
+          { "tekst": "The world immediately switches to Expert Mode", "goed": false }
+        ]
+      },
+      {
+        "vraag": "After collecting the required fragments, which item summons the Moon Lord directly instead of triggering the Lunar Events again?",
+        "antwoorden": [
+          { "tekst": "Celestial Sigil", "goed": true },
+          { "tekst": "Suspicious Looking Eye", "goed": false },
+          { "tekst": "A Lihzahrd Power Cell", "goed": false },
+          { "tekst": "A Bloody Spine", "goed": false }
+        ]
+      }
+    ]
+  }
+]
