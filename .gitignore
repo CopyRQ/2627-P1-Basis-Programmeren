@@ -1,6 +1,37 @@
-/Week 6/Characters
-/Week 6/Locations
-/Week 6/Misc
-/Week 6/Shops
-/Week 6/Tilesets
-/Week 6/UI
+/Week 6/Characters/**/*.png
+/Week 6/Locations/**/*.png
+/Week 6/Misc/**/*.png
+/Week 6/Shops/**/*.png
+/Week 6/Tilesets/**/*.png
+/Week 6/UI/**/*.png
+
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Overworld/spr_susiedt_dark_0.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Battle/spr_susieb_hurt_0.png
+!/Week 6/Characters/Playable Characters/Susie/Ch5/Dark World/Cutscenes/Castle Town (Credits)/spr_susie_sleep_0.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susied_dark_0.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susied_dark_1.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susied_dark_2.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susied_dark_3.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susiel_dark_0.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susiel_dark_1.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susiel_dark_2.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susiel_dark_3.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susier_dark_0.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susier_dark_1.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susier_dark_2.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susier_dark_3.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susieu_dark_0.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susieu_dark_1.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susieu_dark_2.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Walk/spr_susieu_dark_3.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Overworld/Laugh/spr_susiel_dark_laugh_0.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Overworld/Laugh/spr_susiel_dark_laugh_1.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Overworld/Laugh/spr_susier_dark_laugh_0.png
+!/Week 6/Characters/Playable Characters/Susie/Ch1/Dark World/Overworld/Laugh/spr_susier_dark_laugh_1.png
+!/Week 6/Locations/Castle Town/Interiors/Ch2/Ralsei_s Castle/Ch2/bg_dw_susie_room_1_0.png
+!/Week 6/Misc/Effects/Ch5/spr_splash_0.png
+!/Week 6/UI/HUD/Ch3/spr_shop_item_icon_0.png
+!/Week 6/UI/Battle/Icons/Ch1/spr_sparestar_0.png
+!/Week 6/UI/Battle/Icons/Ch1/spr_headsusie_0.png
+!/Week 6/UI/Battle/Soul/Ch1/spr_heart_0.png
+!/Week 6/UI/HUD/Ch1/spr_dmenu_captions_4.png
